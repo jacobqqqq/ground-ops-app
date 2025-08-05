@@ -3,6 +3,7 @@ import { MobileHeader } from "@/components/mobile-header"
 import { ShiftForm } from "@/components/shift-form"
 import { RecentShifts } from "@/components/recent-shifts"
 import { DashboardMetrics } from "@/components/dashboard-metrics"
+import { SafetySection } from "@/components/safety-section"
 import { BottomNavigation } from "@/components/bottom-navigation"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { StatusBadge } from "@/components/ui/status-badge"
@@ -125,6 +126,9 @@ function DashboardOverview() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Safety Section */}
+      <SafetySection />
     </div>
   )
 }
