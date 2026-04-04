@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { MobileHeader } from "@/components/mobile-header"
+import { AirportHeader } from "@/components/airport-header"
 import { ShiftForm } from "@/components/shift-form"
 import { RecentShifts } from "@/components/recent-shifts"
 import { DashboardMetrics } from "@/components/dashboard-metrics"
@@ -28,9 +29,10 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background pb-20">
       <MobileHeader 
-        title="Warehouse Shift Manager" 
+        title="Ground Ops Dashboard" 
         notificationCount={2}
       />
+      <AirportHeader />
       
       <main className="container mx-auto px-4 py-6">
         {renderActiveTab()}
