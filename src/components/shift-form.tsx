@@ -31,7 +31,6 @@ export function ShiftForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     
-    // Mock save - in real app this would save to database
     const shiftData = {
       ...formData,
       id: Date.now().toString(),
@@ -39,7 +38,6 @@ export function ShiftForm() {
       status: 'active'
     }
     
-    // Save to localStorage for demo
     const existingShifts = JSON.parse(localStorage.getItem('shifts') || '[]')
     existingShifts.unshift(shiftData)
     localStorage.setItem('shifts', JSON.stringify(existingShifts))
@@ -49,7 +47,6 @@ export function ShiftForm() {
       description: `${formData.shiftType} shift for ${formData.supervisorName} has been recorded.`,
     })
     
-    // Reset form
     setFormData({
       supervisorName: '',
       date: new Date().toISOString().split('T')[0],
@@ -76,10 +73,10 @@ export function ShiftForm() {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="supervisor">Supervisor Name</Label>
+              <Label htmlFor="supervisor">Ops Supervisor</Label>
               <Input
                 id="supervisor"
-                placeholder="Enter supervisor name"
+                placeholder="Enter ops supervisor name"
                 value={formData.supervisorName}
                 onChange={(e) => updateField('supervisorName', e.target.value)}
                 required
@@ -115,7 +112,7 @@ export function ShiftForm() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="inbound">Inbound Queue Count</Label>
+              <Label htmlFor="inbound">Inbound Aircraft Queue</Label>
               <Input
                 id="inbound"
                 type="number"
@@ -127,7 +124,7 @@ export function ShiftForm() {
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="outbound">Outbound Queue Count</Label>
+              <Label htmlFor="outbound">Outbound Aircraft Queue</Label>
               <Input
                 id="outbound"
                 type="number"

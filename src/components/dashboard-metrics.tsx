@@ -5,14 +5,13 @@ import {
   TrendingUp, 
   TrendingDown, 
   Activity,
-  Package,
-  Truck,
+  Plane,
+  PlaneTakeoff,
   Clock,
   AlertTriangle
 } from "lucide-react"
 
 export function DashboardMetrics() {
-  // Mock real-time data - in production this would come from your warehouse management system
   const metrics = {
     inboundQueue: 47,
     outboundQueue: 23,
@@ -35,27 +34,27 @@ export function DashboardMetrics() {
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <BarChart3 className="h-5 w-5 text-primary" />
-            <span>Live Warehouse Metrics</span>
+            <span>Live Ground Ops Metrics</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center p-4 border rounded-lg">
               <div className="flex items-center justify-center mb-2">
-                <Package className="h-8 w-8 text-primary" />
+                <Plane className="h-8 w-8 text-primary" />
                 {trends.inbound === 'up' && <TrendingUp className="h-4 w-4 text-success ml-1" />}
               </div>
               <div className="text-2xl font-bold text-foreground">{metrics.inboundQueue}</div>
-              <div className="text-sm text-muted-foreground">Inbound Queue</div>
+              <div className="text-sm text-muted-foreground">Inbound Aircraft</div>
             </div>
 
             <div className="text-center p-4 border rounded-lg">
               <div className="flex items-center justify-center mb-2">
-                <Truck className="h-8 w-8 text-accent" />
+                <PlaneTakeoff className="h-8 w-8 text-accent" />
                 {trends.outbound === 'down' && <TrendingDown className="h-4 w-4 text-success ml-1" />}
               </div>
               <div className="text-2xl font-bold text-foreground">{metrics.outboundQueue}</div>
-              <div className="text-sm text-muted-foreground">Outbound Queue</div>
+              <div className="text-sm text-muted-foreground">Outbound Aircraft</div>
             </div>
 
             <div className="text-center p-4 border rounded-lg">
@@ -64,7 +63,7 @@ export function DashboardMetrics() {
                 {trends.processing === 'up' && <TrendingUp className="h-4 w-4 text-success ml-1" />}
               </div>
               <div className="text-2xl font-bold text-foreground">{metrics.processingRate}</div>
-              <div className="text-sm text-muted-foreground">Items/Hour</div>
+              <div className="text-sm text-muted-foreground">Ops/Hour</div>
             </div>
 
             <div className="text-center p-4 border rounded-lg">
@@ -72,7 +71,7 @@ export function DashboardMetrics() {
                 <Clock className="h-8 w-8 text-warning" />
               </div>
               <div className="text-2xl font-bold text-foreground">{metrics.avgProcessingTime}m</div>
-              <div className="text-sm text-muted-foreground">Avg Process Time</div>
+              <div className="text-sm text-muted-foreground">Avg Turnaround</div>
             </div>
           </div>
         </CardContent>
@@ -85,15 +84,15 @@ export function DashboardMetrics() {
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-sm">WMS Connection</span>
+              <span className="text-sm">OPS System</span>
               <StatusBadge variant="success">Online</StatusBadge>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-sm">Scanner Network</span>
+              <span className="text-sm">Comms Network</span>
               <StatusBadge variant="success">Active</StatusBadge>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-sm">Conveyor System</span>
+              <span className="text-sm">GSE Fleet</span>
               <StatusBadge variant="warning">Maintenance</StatusBadge>
             </div>
             <div className="flex items-center justify-between">
@@ -116,15 +115,15 @@ export function DashboardMetrics() {
                 <div className="flex items-start space-x-3 p-3 border border-warning/20 rounded-lg bg-warning/5">
                   <AlertTriangle className="h-4 w-4 text-warning mt-0.5" />
                   <div>
-                    <div className="text-sm font-medium">Conveyor Belt B2</div>
-                    <div className="text-xs text-muted-foreground">Scheduled maintenance due</div>
+                    <div className="text-sm font-medium">Gate B2 — GSE Equipment</div>
+                    <div className="text-xs text-muted-foreground">Scheduled maintenance due on pushback tug</div>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3 p-3 border border-destructive/20 rounded-lg bg-destructive/5">
                   <AlertTriangle className="h-4 w-4 text-destructive mt-0.5" />
                   <div>
                     <div className="text-sm font-medium">High Inbound Volume</div>
-                    <div className="text-xs text-muted-foreground">Queue approaching capacity</div>
+                    <div className="text-xs text-muted-foreground">Aircraft queue approaching ramp capacity</div>
                   </div>
                 </div>
               </div>

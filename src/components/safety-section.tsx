@@ -11,7 +11,6 @@ import {
 } from "lucide-react"
 
 export function SafetySection() {
-  // Mock safety data - in production this would come from your safety management system
   const safetyMetrics = {
     daysWithoutInjury: 42,
     totalIncidents: 3,
@@ -24,22 +23,22 @@ export function SafetySection() {
     {
       date: "2024-07-28",
       type: "Minor Cut",
-      area: "Loading Dock",
-      description: "Worker cut hand on packaging material",
+      area: "Ramp Zone C",
+      description: "Crew member cut hand on cargo container latch",
       status: "Resolved"
     },
     {
       date: "2024-07-15", 
       type: "Slip/Fall",
-      area: "Warehouse Floor",
-      description: "Slip on wet surface near break room",
+      area: "Apron Near Gate B4",
+      description: "Slip on fuel spill near refueling station",
       status: "Under Review"
     },
     {
       date: "2024-07-02",
       type: "Strain/Sprain",
-      area: "Pick Zone",
-      description: "Back strain from improper lifting technique",
+      area: "Baggage Handling",
+      description: "Back strain from improper lifting of oversized luggage",
       status: "Resolved"
     }
   ]
@@ -48,26 +47,25 @@ export function SafetySection() {
     {
       icon: Shield,
       title: "Proper Lifting Technique",
-      description: "Recent back strain incident - reminder to lift with legs, not back",
+      description: "Recent back strain incident — reminder to lift with legs when handling baggage",
       priority: "high"
     },
     {
       icon: AlertTriangle,
-      title: "Wet Floor Awareness", 
-      description: "Check for spills and use caution signs when cleaning",
+      title: "FOD Awareness", 
+      description: "Check ramp areas for foreign object debris before aircraft movement",
       priority: "medium"
     },
     {
       icon: Target,
-      title: "Cut Prevention",
-      description: "Use proper PPE when handling sharp packaging materials",
+      title: "GSE Proximity Protocol",
+      description: "Maintain safe distance from operating ground support equipment",
       priority: "high"
     }
   ]
 
   return (
     <div className="space-y-6">
-      {/* Safety Metrics Overview */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
@@ -114,7 +112,6 @@ export function SafetySection() {
       </Card>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Recent Incidents */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center space-x-2">
@@ -142,7 +139,6 @@ export function SafetySection() {
           </CardContent>
         </Card>
 
-        {/* Safety Tips */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center space-x-2">

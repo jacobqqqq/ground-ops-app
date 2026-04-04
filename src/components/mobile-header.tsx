@@ -21,7 +21,8 @@ export function MobileHeader({ title, onMenuClick, notificationCount = 0 }: Mobi
           >
             <Menu className="h-5 w-5" />
           </Button>
-          <h1 className="text-lg font-semibold text-foreground">{title}</h1>
+          <h1 className="text-lg font-bold tracking-tight text-foreground">{title}</h1>
+          <span className="text-xs text-muted-foreground hidden sm:inline">Ground Ops at-a-Glance</span>
         </div>
         
         <div className="flex items-center space-x-2">
