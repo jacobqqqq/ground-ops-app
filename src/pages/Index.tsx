@@ -8,7 +8,7 @@ import { SafetySection } from "@/components/safety-section"
 import { BottomNavigation } from "@/components/bottom-navigation"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { StatusBadge } from "@/components/ui/status-badge"
-import { Activity, Clock, Users, Plane } from "lucide-react"
+import { Activity, Clock, Users, Plane, CloudFog, Eye, Wind, Thermometer, AlertCircle } from "lucide-react"
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('dashboard')
@@ -99,6 +99,83 @@ function DashboardOverview() {
           )
         })}
       </div>
+
+      {/* Weather Panel */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2">
+            <CloudFog className="h-5 w-5 text-primary" />
+            <span>SFO Weather Conditions</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="flex items-center space-x-3 p-3 border rounded-lg">
+              <Thermometer className="h-6 w-6 text-primary" />
+              <div>
+                <div className="text-xl font-bold">58°F</div>
+                <p className="text-xs text-muted-foreground">Temperature</p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-3 p-3 border rounded-lg">
+              <Wind className="h-6 w-6 text-primary" />
+              <div>
+                <div className="text-xl font-bold">12 mph</div>
+                <p className="text-xs text-muted-foreground">Wind Speed</p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-3 p-3 border rounded-lg">
+              <Eye className="h-6 w-6 text-primary" />
+              <div>
+                <div className="text-xl font-bold">6 mi</div>
+                <p className="text-xs text-muted-foreground">Visibility</p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-3 p-3 border rounded-lg bg-success/5 border-success/20">
+              <CloudFog className="h-6 w-6 text-success" />
+              <div>
+                <div className="text-sm font-bold text-success">Low Risk</div>
+                <p className="text-xs text-muted-foreground">Fog / Delay</p>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Active Incidents */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2">
+            <AlertCircle className="h-5 w-5 text-warning" />
+            <span>Active Incidents</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-3">
+            <div className="flex items-start justify-between p-3 border rounded-lg">
+              <div className="space-y-1">
+                <p className="text-sm font-medium">Gate B7 conflict — dual aircraft assignment</p>
+                <p className="text-xs text-muted-foreground">Today, 09:42 AM</p>
+              </div>
+              <StatusBadge variant="destructive">High</StatusBadge>
+            </div>
+            <div className="flex items-start justify-between p-3 border rounded-lg">
+              <div className="space-y-1">
+                <p className="text-sm font-medium">Pushback tug #4 out of service at Gate C3</p>
+                <p className="text-xs text-muted-foreground">Today, 08:15 AM</p>
+              </div>
+              <StatusBadge variant="warning">Medium</StatusBadge>
+            </div>
+            <div className="flex items-start justify-between p-3 border rounded-lg">
+              <div className="space-y-1">
+                <p className="text-sm font-medium">Inbound delay — UA 347 holding for ramp space</p>
+                <p className="text-xs text-muted-foreground">Today, 07:58 AM</p>
+              </div>
+              <StatusBadge variant="success">Low</StatusBadge>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       <Card>
         <CardHeader>
