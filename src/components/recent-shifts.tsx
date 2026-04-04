@@ -23,9 +23,8 @@ export function RecentShifts() {
   const [shifts, setShifts] = useState<Shift[]>([])
 
   useEffect(() => {
-    // Load shifts from localStorage (mock database)
     const savedShifts = JSON.parse(localStorage.getItem('shifts') || '[]')
-    setShifts(savedShifts.slice(0, 10)) // Show last 10 shifts
+    setShifts(savedShifts.slice(0, 10))
   }, [])
 
   const acknowledgeShift = (shiftId: string) => {
@@ -36,7 +35,6 @@ export function RecentShifts() {
     )
     setShifts(updatedShifts)
     
-    // Update localStorage
     const allShifts = JSON.parse(localStorage.getItem('shifts') || '[]')
     const allUpdated = allShifts.map((shift: Shift) => 
       shift.id === shiftId 

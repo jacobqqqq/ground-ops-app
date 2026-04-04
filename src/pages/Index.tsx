@@ -8,7 +8,7 @@ import { SafetySection } from "@/components/safety-section"
 import { BottomNavigation } from "@/components/bottom-navigation"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { StatusBadge } from "@/components/ui/status-badge"
-import { Activity, Clock, Users, Package } from "lucide-react"
+import { Activity, Clock, Users, Plane } from "lucide-react"
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('dashboard')
@@ -29,7 +29,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background pb-20">
       <MobileHeader 
-        title="Ground Ops Dashboard" 
+        title="GATE" 
         notificationCount={2}
       />
       <AirportHeader />
@@ -46,7 +46,6 @@ const Index = () => {
   )
 }
 
-// Dashboard Overview Component
 function DashboardOverview() {
   const currentShift = {
     supervisor: "Sarah Johnson",
@@ -56,15 +55,14 @@ function DashboardOverview() {
   }
 
   const quickStats = [
-    { label: "Active Staff", value: "24", icon: Users, color: "success" },
-    { label: "Queue Items", value: "47", icon: Package, color: "warning" },
-    { label: "Avg Process Time", value: "8.5m", icon: Clock, color: "primary" },
+    { label: "Active Crew", value: "24", icon: Users, color: "success" },
+    { label: "Aircraft Queue", value: "47", icon: Plane, color: "warning" },
+    { label: "Avg Turnaround", value: "8.5m", icon: Clock, color: "primary" },
     { label: "Efficiency", value: "94%", icon: Activity, color: "success" },
   ]
 
   return (
     <div className="space-y-6">
-      {/* Current Shift Status */}
       <Card>
         <CardHeader>
           <CardTitle>Current Shift Status</CardTitle>
@@ -83,7 +81,6 @@ function DashboardOverview() {
         </CardContent>
       </Card>
 
-      {/* Quick Stats */}
       <div className="grid grid-cols-2 gap-4">
         {quickStats.map((stat, index) => {
           const Icon = stat.icon
@@ -103,7 +100,6 @@ function DashboardOverview() {
         })}
       </div>
 
-      {/* Recent Activity */}
       <Card>
         <CardHeader>
           <CardTitle>Recent Activity</CardTitle>
@@ -118,7 +114,7 @@ function DashboardOverview() {
             <div className="flex items-center space-x-3 text-sm">
               <div className="w-2 h-2 bg-warning rounded-full"></div>
               <span className="text-muted-foreground">10:30 AM</span>
-              <span>High inbound queue alert cleared</span>
+              <span>High aircraft queue alert cleared</span>
             </div>
             <div className="flex items-center space-x-3 text-sm">
               <div className="w-2 h-2 bg-primary rounded-full"></div>
@@ -129,7 +125,6 @@ function DashboardOverview() {
         </CardContent>
       </Card>
 
-      {/* Safety Section */}
       <SafetySection />
     </div>
   )
