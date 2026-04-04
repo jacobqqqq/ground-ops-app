@@ -8,7 +8,7 @@ import { SafetySection } from "@/components/safety-section"
 import { BottomNavigation } from "@/components/bottom-navigation"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { StatusBadge } from "@/components/ui/status-badge"
-import { Activity, Clock, Users, Plane } from "lucide-react"
+import { Activity, Clock, Users, Plane, CloudFog, Eye, Wind, Thermometer, AlertCircle } from "lucide-react"
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('dashboard')
