@@ -8,10 +8,16 @@ import { SafetySection } from "@/components/safety-section"
 import { BottomNavigation } from "@/components/bottom-navigation"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { StatusBadge } from "@/components/ui/status-badge"
-import { Activity, Clock, Users, Plane, CloudFog, Eye, Wind, Thermometer, AlertCircle } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
+import { Activity, Clock, Users, Plane, CloudFog, Eye, Wind, Thermometer, AlertCircle, MapPin } from "lucide-react"
+
+type Role = 'MANAGER' | 'GROUND_OPS'
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('dashboard')
+  const [role, setRole] = useState<Role>('MANAGER')
+
+  const toggleRole = () => setRole(r => r === 'MANAGER' ? 'GROUND_OPS' : 'MANAGER')
 
   const renderActiveTab = () => {
     switch (activeTab) {
@@ -28,20 +34,24 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background pb-20">
-      <MobileHeader 
-        title="GATE" 
+      <MobileHeader
+        title="GATE"
         notificationCount={2}
+        role={role}
+        onRoleSwitch={toggleRole}
       />
       <AirportHeader />
-      
+
       <main className="container mx-auto px-4 py-6">
-        {renderActiveTab()}
+        {role === 'MANAGER' ? renderActiveTab() : <GroundOpsView />}
       </main>
 
-      <BottomNavigation 
-        activeTab={activeTab} 
-        onTabChange={setActiveTab} 
-      />
+      {role === 'MANAGER' && (
+        <BottomNavigation
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+        />
+      )}
     </div>
   )
 }
@@ -203,6 +213,128 @@ function DashboardOverview() {
       </Card>
 
       <SafetySection />
+    </div>
+  )
+}
+
+function GroundOpsView() {
+  return (
+    <div className="space-y-6">
+      {/* Current Shift Status */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Current Shift Status</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="font-semibold text-lg">Sarah Johnson</h3>
+              <p className="text-muted-foreground">Day Shift • Started 6:00 AM</p>
+            </div>
+            <StatusBadge variant="success">
+              <Activity className="h-3 w-3 mr-1" />
+              Active
+            </StatusBadge>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Assigned Gate */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2">
+            <MapPin className="h-5 w-5 text-primary" />
+            <span>Assigned Gate</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <Badge className="text-2xl font-bold px-4 py-2 bg-primary text-primary-foreground">
+                Gate B7
+              </Badge>
+            </div>
+            <StatusBadge variant="success">On Duty</StatusBadge>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Active Incidents */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2">
+            <AlertCircle className="h-5 w-5 text-warning" />
+            <span>Active Incidents</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-3">
+            <div className="flex items-start justify-between p-3 border rounded-lg">
+              <div className="space-y-1">
+                <p className="text-sm font-medium">Gate B7 conflict — dual aircraft assignment</p>
+                <p className="text-xs text-muted-foreground">Today, 09:42 AM</p>
+              </div>
+              <StatusBadge variant="destructive">High</StatusBadge>
+            </div>
+            <div className="flex items-start justify-between p-3 border rounded-lg">
+              <div className="space-y-1">
+                <p className="text-sm font-medium">Pushback tug #4 out of service at Gate C3</p>
+                <p className="text-xs text-muted-foreground">Today, 08:15 AM</p>
+              </div>
+              <StatusBadge variant="warning">Medium</StatusBadge>
+            </div>
+            <div className="flex items-start justify-between p-3 border rounded-lg">
+              <div className="space-y-1">
+                <p className="text-sm font-medium">Inbound delay — UA 347 holding for ramp space</p>
+                <p className="text-xs text-muted-foreground">Today, 07:58 AM</p>
+              </div>
+              <StatusBadge variant="success">Low</StatusBadge>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Weather Panel */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2">
+            <CloudFog className="h-5 w-5 text-primary" />
+            <span>SFO Weather Conditions</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="flex items-center space-x-3 p-3 border rounded-lg">
+              <Thermometer className="h-6 w-6 text-primary" />
+              <div>
+                <div className="text-xl font-bold">58°F</div>
+                <p className="text-xs text-muted-foreground">Temperature</p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-3 p-3 border rounded-lg">
+              <Wind className="h-6 w-6 text-primary" />
+              <div>
+                <div className="text-xl font-bold">12 mph</div>
+                <p className="text-xs text-muted-foreground">Wind Speed</p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-3 p-3 border rounded-lg">
+              <Eye className="h-6 w-6 text-primary" />
+              <div>
+                <div className="text-xl font-bold">6 mi</div>
+                <p className="text-xs text-muted-foreground">Visibility</p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-3 p-3 border rounded-lg bg-success/5 border-success/20">
+              <CloudFog className="h-6 w-6 text-success" />
+              <div>
+                <div className="text-sm font-bold text-success">Low Risk</div>
+                <p className="text-xs text-muted-foreground">Fog / Delay</p>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   )
 }
