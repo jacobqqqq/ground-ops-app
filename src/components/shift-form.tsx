@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/hooks/use-toast"
-import { Save, Clock } from "lucide-react"
+import { Save, Clock, ArrowRightLeft } from "lucide-react"
 
 interface ShiftFormData {
   supervisorName: string
@@ -17,8 +17,13 @@ interface ShiftFormData {
   notes: string
 }
 
-export function ShiftForm() {
+interface ShiftFormProps {
+  onHandoffNote?: (note: string) => void
+}
+
+export function ShiftForm({ onHandoffNote }: ShiftFormProps) {
   const { toast } = useToast()
+  const [handoffNote, setHandoffNote] = useState('')
   const [formData, setFormData] = useState<ShiftFormData>({
     supervisorName: '',
     date: new Date().toISOString().split('T')[0],
@@ -62,6 +67,7 @@ export function ShiftForm() {
   }
 
   return (
+    <>
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center space-x-2">
@@ -154,5 +160,40 @@ export function ShiftForm() {
         </form>
       </CardContent>
     </Card>
+
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center space-x-2">
+          <ArrowRightLeft className="h-5 w-5 text-warning" />
+          <span>Handoff Notes</span>
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div className="space-y-2">
+          <Label htmlFor="handoff">Action items for incoming shift</Label>
+          <Textarea
+            id="handoff"
+            placeholder="e.g. UA 487 delayed 2hrs, expect late gate reassignment at B12."
+            value={handoffNote}
+            onChange={(e) => setHandoffNote(e.target.value)}
+            rows={3}
+          />
+        </div>
+        <Button
+          className="w-full"
+          variant="outline"
+          onClick={() => {
+            if (!handoffNote.trim()) return
+            onHandoffNote?.(handoffNote.trim())
+            toast({ title: "Handoff note posted", description: "The incoming shift will see this briefing." })
+          }}
+          disabled={!handoffNote.trim()}
+        >
+          <ArrowRightLeft className="mr-2 h-4 w-4" />
+          Post Handoff Note
+        </Button>
+      </CardContent>
+    </Card>
+    </>
   )
 }
