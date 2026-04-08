@@ -67,6 +67,7 @@ export function ShiftForm({ onHandoffNote }: ShiftFormProps) {
   }
 
   return (
+    <>
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center space-x-2">
