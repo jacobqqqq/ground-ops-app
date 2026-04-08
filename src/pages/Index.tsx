@@ -25,6 +25,7 @@ const Index = () => {
   const [activeTab, setActiveTab] = useState('dashboard')
   const [role, setRole] = useState<Role>('MANAGER')
   const [briefings, setBriefings] = useState<BriefingEntry[]>(defaultBriefings)
+  const [handoffNote, setHandoffNote] = useState('')
 
   const toggleRole = () => setRole(r => r === 'MANAGER' ? 'GROUND_OPS' : 'MANAGER')
 
@@ -32,10 +33,14 @@ const Index = () => {
     setBriefings(prev => [entry, ...prev])
   }
 
+  const handleHandoffNote = (note: string) => {
+    setHandoffNote(note)
+  }
+
   const renderActiveTab = () => {
     switch (activeTab) {
       case 'log':
-        return <ShiftForm />
+        return <ShiftForm onHandoffNote={handleHandoffNote} />
       case 'history':
         return <RecentShifts />
       case 'metrics':
@@ -56,7 +61,7 @@ const Index = () => {
       <AirportHeader />
 
       <main className="container mx-auto px-4 py-6">
-        {role === 'MANAGER' ? renderActiveTab() : <GroundOpsView briefings={briefings} />}
+        {role === 'MANAGER' ? renderActiveTab() : <GroundOpsView briefings={briefings} handoffNote={handoffNote} />}
       </main>
 
       {role === 'MANAGER' && (
@@ -231,9 +236,22 @@ function DashboardOverview({ onPostBriefing }: { onPostBriefing: (entry: Briefin
   )
 }
 
-function GroundOpsView({ briefings }: { briefings: BriefingEntry[] }) {
+function GroundOpsView({ briefings, handoffNote }: { briefings: BriefingEntry[]; handoffNote: string }) {
   return (
     <div className="space-y-6">
+      {handoffNote && (
+        <Card className="border-warning bg-warning/10">
+          <CardHeader className="pb-2">
+            <CardTitle className="flex items-center space-x-2 text-lg">
+              <AlertCircle className="h-5 w-5 text-warning" />
+              <span>Incoming Shift Briefing</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm font-medium">{handoffNote}</p>
+          </CardContent>
+        </Card>
+      )}
       {/* Current Shift Status */}
       <Card>
         <CardHeader>
