@@ -1,32 +1,43 @@
 # Ground Ops
 
-Role-based airport ground operations app for shift visibility and handoff continuity.
-
-Built as a React rebuild of an internal tool I shipped at United Airlines — the original ran on Palantir Foundry, Power Apps, and Power BI. I recreated the core workflow in a single deployable app.
+Role-based airport ground operations app for shift visibility, handoff continuity, and worker safety briefings.
 
 **Live demo:** [warehouse-handoff-hub.lovable.app](https://warehouse-handoff-hub.lovable.app)
 
 ---
 
-### Background
+## Background
 
-At United, ground crews and the C-suite (COO, VP of Logistics, Directors) needed different views of the same operational data — field workers needed real-time productivity tracking, executives needed data-driven goal-setting. No single tool served both.
+React rebuild of an internal tool I shipped during a technical operations internship at United Airlines. The original ran on Palantir Foundry, Power Apps, and Power BI.
 
-I self-taught Palantir Foundry (Ontology, Workshop, Pipeline Builder) and built the data pipelines and dashboards from scratch. The pilot deployed to 100+ users across the logistics org, with Foundry pipelines integrated into Power BI for governance across a $3.5B inventory network.
+Ground crews and the C-suite (COO, VP of Logistics, Directors) needed different views of the same operational data — field workers needed real-time productivity tracking, executives needed data-driven goal-setting tools. No single tool served both. Shift handoffs happened through verbal briefings and paper logs, and safety communications were fragmented across notice boards and email.
 
-This repo is a standalone rebuild of the core shift visibility and handoff workflow.
-
----
-
-### Views
-
-**Manager** — active crew, aircraft queue, avg turnaround, efficiency, SFO weather, active incidents, shift log, and handoff acknowledgment.
-
-**Ground Ops** — scoped to current shift status, assigned gate, and active incidents. No logging, no metrics.
+This repo is a standalone rebuild of the core workflow — shift visibility, handoff continuity, and contextual safety briefings — in a single deployable app.
 
 ---
 
-### Stack
-React · TypeScript · Tailwind · shadcn/ui · Vite
+## Features
 
-Original: Palantir Foundry · Power Apps · Power BI
+### Manager view
+- Live shift status with active crew count, aircraft queue, avg turnaround, and efficiency metrics
+- SFO weather conditions with delay risk indicator
+- Active incidents list
+- Post Safety Briefings — push categorized announcements (Weather, Incident, General) to ground worker view in real time
+- Shift log with handoff notes — flag action items for the incoming shift (e.g., delayed flights, gate reassignments)
+- Shift history and metrics tabs
+
+### Ground Ops view
+- Incoming shift briefing banner — surfaces the most recent handoff note from the outgoing manager
+- Current shift status and assigned gate
+- Active incidents
+- Safety Briefing panel — contextual safety tips derived from recent incidents (PII abstracted) and management announcements, color-coded by category
+
+Safety briefing design was developed in alignment with United's safety training board guidelines and shift briefing protocols.
+
+---
+
+## Stack
+
+**This repo:** React · TypeScript · Tailwind · shadcn/ui · Vite · Lovable
+
+**Original (United Airlines):** Palantir Foundry · Power Apps · Power BI
