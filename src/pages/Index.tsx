@@ -41,7 +41,7 @@ const Index = () => {
       case 'metrics':
         return <DashboardMetrics />
       default:
-        return <DashboardOverview />
+        return <DashboardOverview onPostBriefing={handlePostBriefing} />
     }
   }
 
@@ -56,7 +56,7 @@ const Index = () => {
       <AirportHeader />
 
       <main className="container mx-auto px-4 py-6">
-        {role === 'MANAGER' ? renderActiveTab() : <GroundOpsView />}
+        {role === 'MANAGER' ? renderActiveTab() : <GroundOpsView briefings={briefings} />}
       </main>
 
       {role === 'MANAGER' && (
