@@ -349,6 +349,8 @@ function GroundOpsView({ briefings }: { briefings: BriefingEntry[] }) {
           </div>
         </CardContent>
       </Card>
+
+      <SafetyBriefing entries={briefings} />
     </div>
   )
 }
