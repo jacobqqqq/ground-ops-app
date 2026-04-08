@@ -5,6 +5,8 @@ import { ShiftForm } from "@/components/shift-form"
 import { RecentShifts } from "@/components/recent-shifts"
 import { DashboardMetrics } from "@/components/dashboard-metrics"
 import { SafetySection } from "@/components/safety-section"
+import { SafetyBriefing, type BriefingEntry } from "@/components/safety-briefing"
+import { PostBriefingForm } from "@/components/post-briefing-form"
 import { BottomNavigation } from "@/components/bottom-navigation"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { StatusBadge } from "@/components/ui/status-badge"
@@ -13,11 +15,22 @@ import { Activity, Clock, Users, Plane, CloudFog, Eye, Wind, Thermometer, AlertC
 
 type Role = 'MANAGER' | 'GROUND_OPS'
 
+const defaultBriefings: BriefingEntry[] = [
+  { category: 'Weather', message: 'High Heat Advisory: Temps above 100°F today. Stay hydrated and take shade breaks every 30 minutes.' },
+  { category: 'Incident', message: 'Environmental Hazard Incident (Yesterday): Review chemical spill kit locations in your zone before shift start.' },
+  { category: 'General', message: 'FOD Walk Reminder: Inspect your gate area for foreign object debris at shift start.' },
+]
+
 const Index = () => {
   const [activeTab, setActiveTab] = useState('dashboard')
   const [role, setRole] = useState<Role>('MANAGER')
+  const [briefings, setBriefings] = useState<BriefingEntry[]>(defaultBriefings)
 
   const toggleRole = () => setRole(r => r === 'MANAGER' ? 'GROUND_OPS' : 'MANAGER')
+
+  const handlePostBriefing = (entry: BriefingEntry) => {
+    setBriefings(prev => [entry, ...prev])
+  }
 
   const renderActiveTab = () => {
     switch (activeTab) {
@@ -28,7 +41,7 @@ const Index = () => {
       case 'metrics':
         return <DashboardMetrics />
       default:
-        return <DashboardOverview />
+        return <DashboardOverview onPostBriefing={handlePostBriefing} />
     }
   }
 
@@ -43,7 +56,7 @@ const Index = () => {
       <AirportHeader />
 
       <main className="container mx-auto px-4 py-6">
-        {role === 'MANAGER' ? renderActiveTab() : <GroundOpsView />}
+        {role === 'MANAGER' ? renderActiveTab() : <GroundOpsView briefings={briefings} />}
       </main>
 
       {role === 'MANAGER' && (
@@ -56,7 +69,7 @@ const Index = () => {
   )
 }
 
-function DashboardOverview() {
+function DashboardOverview({ onPostBriefing }: { onPostBriefing: (entry: BriefingEntry) => void }) {
   const currentShift = {
     supervisor: "Sarah Johnson",
     type: "Day Shift",
@@ -212,12 +225,13 @@ function DashboardOverview() {
         </CardContent>
       </Card>
 
+      <PostBriefingForm onPost={onPostBriefing} />
       <SafetySection />
     </div>
   )
 }
 
-function GroundOpsView() {
+function GroundOpsView({ briefings }: { briefings: BriefingEntry[] }) {
   return (
     <div className="space-y-6">
       {/* Current Shift Status */}
@@ -335,6 +349,8 @@ function GroundOpsView() {
           </div>
         </CardContent>
       </Card>
+
+      <SafetyBriefing entries={briefings} />
     </div>
   )
 }
