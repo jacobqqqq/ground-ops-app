@@ -69,7 +69,7 @@ const Index = () => {
   )
 }
 
-function DashboardOverview() {
+function DashboardOverview({ onPostBriefing }: { onPostBriefing: (entry: BriefingEntry) => void }) {
   const currentShift = {
     supervisor: "Sarah Johnson",
     type: "Day Shift",
@@ -225,12 +225,13 @@ function DashboardOverview() {
         </CardContent>
       </Card>
 
+      <PostBriefingForm onPost={onPostBriefing} />
       <SafetySection />
     </div>
   )
 }
 
-function GroundOpsView() {
+function GroundOpsView({ briefings }: { briefings: BriefingEntry[] }) {
   return (
     <div className="space-y-6">
       {/* Current Shift Status */}
